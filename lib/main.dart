@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 void main() {
   runApp(MyApp());
 }
@@ -37,7 +38,7 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();  
+    var appState = context.watch<MyAppState>();
     var pair = appState.current;                 // ← Add this.
 
     return Scaffold(
@@ -78,7 +79,7 @@ class BigCard extends StatelessWidget {
       color: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase, 
+        child: Text(pair.asLowerCase,
         style: style,
         semanticsLabel: "${pair.first} ${pair.second}",
         ),
