@@ -39,15 +39,21 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    var pair = appState.current;                 // ← Add this.
+    var pair = appState.current;                 
 
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text('TableTalkz',
+              style: TextStyle(fontSize: 15),
+               ),
+            ),
             BigCard(pair: pair),
-            SizedBox(height: 10),               // ← Change to this.
+            SizedBox(height: 10),              
             ElevatedButton(
               onPressed: () {
                 appState.getNext();
