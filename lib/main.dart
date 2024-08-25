@@ -1,143 +1,139 @@
-
-
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:namer_app/practice.dart';
 import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(
+MyApp()
+  );
 }
 
 class MyApp extends StatelessWidget {
+  // Get the UID
   const MyApp({super.key});
+
+  // Create the constructor that would be my widget component
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 152, 85, 207)),
-        ),
-        home: MyHomePage(),
-      ),
-    );
+      return ChangeNotifierProvider(
+        create: (context) => MyAppState(),
+        child: MaterialApp(
+          theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 98, 0, 255))
+          ),
+        home: MyHome(),
+          )
+        );
   }
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
+  var current = WordPair.random(); //Add TableTalkz questions here
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHome extends StatelessWidget {
+  const MyHome({super.key});
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-  String nameX = 'Marcus';
-  List<String> road = ['butt'];
-  
-  void printer(List<dynamic> n) {
-    try {
-      var priN = printEle;    // Assigning functions to variables
-      n.forEach(priN);     /// Testing functions as first-class objects + tear-offs
-      /// Tear-Off - Instead of:
-      /// list.forEach((x){
-      /// print(x);
-      /// });
-    } on FormatException {
-      print('You must insert a non-null value');
-    } on Exception catch (e){
-      print('Oops! Your error is an unknown Exception: $e');
-    } catch (e){
-      print('Caught Error: $e');
-    }
-  }
-  printer(list);
-
-    (String N) {            // Anonymous Function
-      print('This is $N Aurelius');
-    }(nameX);              // Closure -  It's accessing a variable outside it's scope and calling it
-
-    // Generators
-    Iterable<dynamic> gener8(dynamic n) sync*{
-      int k = 0;
-      while (k < n.length) {
-        yield k++;
-      }
-      print(k);
-    }
-
-    gener8(list);
-    
-    Stream<dynamic> gen8(dynamic n) async*{
-      int k = 0;
-      while (k < n.length) {
-        yield k++;
-      }
-      print(k);
-    }
-
-    gen8(list);
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text('TableTalkz',
-              style: TextStyle(fontSize: 25),)
-            ),
-            BigCard(pair: pair),
-            SizedBox(height: 10),               // ← Change to this.
-            ElevatedButton(
-              onPressed: () {
-                appState.getNext();
+      appBar: AppBar(
+        title: Text('TableTalkz'),
+        backgroundColor: const Color.fromARGB(255, 128, 116, 240),
+        foregroundColor: const Color.fromARGB(255, 241, 241, 241),
+      ),
+      backgroundColor: const Color.fromARGB(255, 19, 19, 19),
+      
+      body: Column(
+            children: [
+              Center(
+                child: Text(appState.current.asLowerCase,
+                style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),),
+
+                
+              ),
+              ElevatedButton(onPressed: () {
+                print('Button is pressed');
               },
-              child: Text('Next Word'),
+              child: Text(' Next Question'),
+              ),
+            ],
+          ),
+      drawer: Drawer( // Learning purposes
+        child: ListView(
+          padding: const EdgeInsets.all(0),
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.green,
+              ), //BoxDecoration
+              child: UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.green),
+                accountName: Text(
+                  "Abhishek Mishra",
+                  style: TextStyle(fontSize: 18),
+                ),
+                accountEmail: Text("abhishekm977@gmail.com"),
+                currentAccountPictureSize: Size.square(50),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 165, 255, 137),
+                  child: Text(
+                    "A",
+                    style: TextStyle(fontSize: 30.0, color: Colors.blue),
+                  ), //Text
+                ), //circleAvatar
+              ), //UserAccountDrawerHeader
+            ), //DrawerHeader
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text(' My Profile '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.book),
+              title: const Text(' My Course '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.workspace_premium),
+              title: const Text(' Go Premium '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.video_label),
+              title: const Text(' Saved Videos '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text(' Edit Profile '),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('LogOut'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final style = theme.textTheme.displayMedium!.copyWith(color: theme.colorScheme.onSurface);
-
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase,
-        style: style,
-        semanticsLabel: "${pair.first} ${pair.second}",
-        ),
-      ),
+      ), //Drawer
     );
   }
 }
