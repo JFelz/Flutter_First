@@ -1,4 +1,4 @@
-List list = [{
+List humanlist = [{
   'name': 'Jovanni',
   'age': 28,
   'sex': 'Male'
