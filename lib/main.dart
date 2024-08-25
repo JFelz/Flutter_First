@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-MyApp()
+MyApp()         //  It creates the app-wide state, name of app, visual theme, and home
   );
 }
 
@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return ChangeNotifierProvider(
-        create: (context) => MyAppState(),
+      return ChangeNotifierProvider( //The state is created and provided to the whole app using a ChangeNotifierProvider. This allows any widget in the app to get hold of the state.
+        create: (context) => MyAppState(), // Creates an instance whenever MyApp is called, so I can use state whenever throughout the app.
         child: MaterialApp(
           theme: ThemeData(
             useMaterial3: true,
@@ -30,8 +30,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppState extends ChangeNotifier {
+//The state location
+  /* defines the data the app needs to function. Right now, it only contains a single variable with the current random word pair. */
+class MyAppState extends ChangeNotifier { //ChangeNotifier- it can notify others about its own changes. For example, if the current word pair changes, some widgets in the app need to know.
   var current = WordPair.random(); //Add TableTalkz questions here
+  void getNext(){
+    current = WordPair.random();
+    notifyListeners(); // Calls notifyListeners()(a method of ChangeNotifier)that ensures that anyone watching MyAppState is notified.
+  }
 }
 
 class MyHome extends StatelessWidget {
@@ -39,7 +45,7 @@ class MyHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+    var appState = context.watch<MyAppState>(); // Tracks changes to the app's current state using the watch method.
 
     return Scaffold(
       appBar: AppBar(
@@ -58,9 +64,9 @@ class MyHome extends StatelessWidget {
                 
               ),
               ElevatedButton(onPressed: () {
-                print('Button is pressed');
+                appState.getNext();
               },
-              child: Text(' Next Question'),
+                  child: Text(' Next Question'),
               ),
             ],
           ),
@@ -70,21 +76,22 @@ class MyHome extends StatelessWidget {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Color.fromARGB(255, 128, 116, 240),
               ), //BoxDecoration
               child: UserAccountsDrawerHeader(
-                decoration: BoxDecoration(color: Colors.green),
+                decoration: BoxDecoration(color: Color.fromARGB(255, 128, 116, 240)),
                 accountName: Text(
-                  "Abhishek Mishra",
+                  "Jovanni Feliz",
                   style: TextStyle(fontSize: 18),
                 ),
-                accountEmail: Text("abhishekm977@gmail.com"),
+                accountEmail: Text("jojo@gmail.com"),
                 currentAccountPictureSize: Size.square(50),
                 currentAccountPicture: CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 165, 255, 137),
+                  backgroundColor: Color.fromARGB(255, 235, 176, 66),
                   child: Text(
                     "A",
-                    style: TextStyle(fontSize: 30.0, color: Colors.blue),
+                    style: TextStyle(fontSize: 30.0, color: Color.fromARGB(255, 17, 17, 17),
+                    ),
                   ), //Text
                 ), //circleAvatar
               ), //UserAccountDrawerHeader
@@ -98,7 +105,7 @@ class MyHome extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.book),
-              title: const Text(' My Course '),
+              title: const Text(' My Collection '),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -112,7 +119,7 @@ class MyHome extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.video_label),
-              title: const Text(' Saved Videos '),
+              title: const Text(' My Own Questions '),
               onTap: () {
                 Navigator.pop(context);
               },
