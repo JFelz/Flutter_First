@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "292671758039",
+    "project_id": "tabletalkz-5c9e1",
+    "storage_bucket": "tabletalkz-5c9e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292671758039:android:9785cd1bb690a58c1e5a92",
+        "android_client_info": {
+          "package_name": "table.talkz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlvdL7GbwAoVchmLeY4oorg4qDJxCtH0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
