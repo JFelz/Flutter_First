@@ -46,6 +46,7 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>(); // Tracks changes to the app's current state using the watch method.
+    var pair = appState.current;
 
     return Scaffold(
       appBar: AppBar(
@@ -56,12 +57,10 @@ class MyHome extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 19, 19, 19),
       
       body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
-                child: Text(appState.current.asLowerCase,
-                style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),),
-
-                
+                child: BigCard(pair: pair),
               ),
               ElevatedButton(onPressed: () {
                 appState.getNext();
@@ -142,5 +141,29 @@ class MyHome extends StatelessWidget {
         ),
       ), //Drawer
     );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displayLarge!.copyWith(color: Colors.black);
+
+    return Card(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Text( pair.asLowerCase,
+        style: style),
+        ),
+      );
   }
 }
