@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 152, 85, 207)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 255, 255, 255)),
         ),
         home: MyHomePage(),
       ),
@@ -37,35 +37,65 @@ class MyAppState extends ChangeNotifier {
 
 class MyHomePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;                 
+  Widget build(BuildContext context) { 
+        var appState = context.watch<MyAppState>();
+    var pair = appState.current;              
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text('TableTalkz',
-              style: TextStyle(fontSize: 15),
-               ),
+      body:Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 77, 0, 0),
+              Color.fromARGB(255, 156, 0, 0),
+              Color.fromARGB(255, 202, 0, 0),
+              Color.fromARGB(255, 255, 0, 0),
+              Color.fromARGB(255, 255, 31, 31),
+              Color.fromARGB(255, 255, 124, 124),
+            ],
+              ),
             ),
-            BigCard(pair: pair),
-            SizedBox(height: 10),              
-            ElevatedButton(
-              onPressed: () {
-                appState.getNext();
-              },
-              child: Text('Next Word'),
-            ),
-          ],
+        child: Center(
+          child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text('TableTalkz',
+                          style: TextStyle(fontSize: 15),
+                           ),
+                        ),
+                        BigCard(pair: pair),
+                        SizedBox(height: 10),              
+                        ElevatedButton(
+                          onPressed: () {
+                            appState.getNext();
+                          },
+                          child: Text('Next Word', style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 20.0
+                          ),),
+                        ),
+                      ],
+                    ),
         ),
       ),
-    );
+              );
   }
 }
+
+// class GradientContainer extends StatelessWidget {
+
+// @override
+//   Widget build(BuildContext context) {
+
+//     return Container(
+//     );
+//   }
+// }
+
 
 class BigCard extends StatelessWidget {
   const BigCard({
