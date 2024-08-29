@@ -4,11 +4,16 @@ import 'package:provider/provider.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(
+MyApp()         //  It creates the app-wide state, name of app, visual theme, and home
+  );
 }
 
 class MyApp extends StatelessWidget {
+  // Get the UID
   const MyApp({super.key});
+
+  // Create the constructor that would be my widget component
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +31,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
+//The state location
+  /* defines the data the app needs to function. Right now, it only contains a single variable with the current random word pair. */
+class MyAppState extends ChangeNotifier { //ChangeNotifier- it can notify others about its own changes. For example, if the current word pair changes, some widgets in the app need to know.
+  var current = WordPair.random(); //Add TableTalkz questions here
+  void getNext(){
     current = WordPair.random();
-    notifyListeners();
+    notifyListeners(); // Calls notifyListeners()(a method of ChangeNotifier)that ensures that anyone watching MyAppState is notified.
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHome extends StatelessWidget {
+  const MyHome({super.key});
+
   @override
   Widget build(BuildContext context) { 
         var appState = context.watch<MyAppState>();
@@ -108,18 +116,15 @@ class BigCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    final style = theme.textTheme.displayMedium!.copyWith(color: theme.colorScheme.onSurface);
+    final style = theme.textTheme.displayLarge!.copyWith(color: Colors.black);
 
     return Card(
-      color: theme.colorScheme.primary,
+      color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase,
-        style: style,
-        semanticsLabel: "${pair.first} ${pair.second}",
+        padding: const EdgeInsets.all(15.0),
+        child: Text( pair.asLowerCase,
+        style: style),
         ),
-      ),
-    );
+      );
   }
 }
