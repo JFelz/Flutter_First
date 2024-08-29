@@ -17,16 +17,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return ChangeNotifierProvider( //The state is created and provided to the whole app using a ChangeNotifierProvider. This allows any widget in the app to get hold of the state.
-        create: (context) => MyAppState(), // Creates an instance whenever MyApp is called, so I can use state whenever throughout the app.
-        child: MaterialApp(
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 98, 0, 255))
-          ),
-        home: MyHome(),
-          )
-        );
+    return ChangeNotifierProvider(
+      create: (context) => MyAppState(),
+      child: MaterialApp(
+        title: 'Namer App',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 255, 255, 255)),
+        ),
+        home: MyHomePage(),
+      ),
+    );
   }
 }
 
@@ -44,105 +45,65 @@ class MyHome extends StatelessWidget {
   const MyHome({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>(); // Tracks changes to the app's current state using the watch method.
-    var pair = appState.current;
+  Widget build(BuildContext context) { 
+        var appState = context.watch<MyAppState>();
+    var pair = appState.current;              
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('TableTalkz'),
-        backgroundColor: const Color.fromARGB(255, 128, 116, 240),
-        foregroundColor: const Color.fromARGB(255, 241, 241, 241),
-      ),
-      backgroundColor: const Color.fromARGB(255, 19, 19, 19),
-      
-      body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: BigCard(pair: pair),
-              ),
-              ElevatedButton(onPressed: () {
-                appState.getNext();
-              },
-                  child: Text(' Next Question'),
-              ),
+      body:Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 77, 0, 0),
+              Color.fromARGB(255, 156, 0, 0),
+              Color.fromARGB(255, 202, 0, 0),
+              Color.fromARGB(255, 255, 0, 0),
+              Color.fromARGB(255, 255, 31, 31),
+              Color.fromARGB(255, 255, 124, 124),
             ],
-          ),
-      drawer: Drawer( // Learning purposes
-        child: ListView(
-          padding: const EdgeInsets.all(0),
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 128, 116, 240),
-              ), //BoxDecoration
-              child: UserAccountsDrawerHeader(
-                decoration: BoxDecoration(color: Color.fromARGB(255, 128, 116, 240)),
-                accountName: Text(
-                  "Jovanni Feliz",
-                  style: TextStyle(fontSize: 18),
-                ),
-                accountEmail: Text("jojo@gmail.com"),
-                currentAccountPictureSize: Size.square(50),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 235, 176, 66),
-                  child: Text(
-                    "A",
-                    style: TextStyle(fontSize: 30.0, color: Color.fromARGB(255, 17, 17, 17),
+              ),
+            ),
+        child: Center(
+          child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text('TableTalkz',
+                          style: TextStyle(fontSize: 15),
+                           ),
+                        ),
+                        BigCard(pair: pair),
+                        SizedBox(height: 10),              
+                        ElevatedButton(
+                          onPressed: () {
+                            appState.getNext();
+                          },
+                          child: Text('Next Word', style: TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 20.0
+                          ),),
+                        ),
+                      ],
                     ),
-                  ), //Text
-                ), //circleAvatar
-              ), //UserAccountDrawerHeader
-            ), //DrawerHeader
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text(' My Profile '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.book),
-              title: const Text(' My Collection '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.workspace_premium),
-              title: const Text(' Go Premium '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.video_label),
-              title: const Text(' My Own Questions '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text(' Edit Profile '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('LogOut'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
         ),
-      ), //Drawer
-    );
+      ),
+              );
   }
 }
+
+// class GradientContainer extends StatelessWidget {
+
+// @override
+//   Widget build(BuildContext context) {
+
+//     return Container(
+//     );
+//   }
+// }
+
 
 class BigCard extends StatelessWidget {
   const BigCard({
