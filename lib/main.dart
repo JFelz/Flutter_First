@@ -1,6 +1,12 @@
+import 'dart:ui';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:namer_app/button_random.dart';
+import 'package:namer_app/title.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/gradient_container.dart';
 
 
 void main() {
@@ -22,7 +28,6 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           theme: ThemeData(
             useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 98, 0, 255))
           ),
         home: MyHome(),
           )
@@ -50,8 +55,16 @@ class MyHome extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('TableTalkz'),
-        backgroundColor: const Color.fromARGB(255, 128, 116, 240),
+        // AppBar Background Color
+        flexibleSpace: GradientContainer(
+          alignLeft: Alignment.topLeft, 
+          alignRight: Alignment.bottomRight,
+          colorStart: Color.fromARGB(255, 56, 119, 92),
+          colorEnd: Color.fromARGB(255, 121, 255, 222),
+        ),
+        title: Text('TableTalkz', style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),
+        fontWeight:FontWeight.bold
+        )),
         foregroundColor: const Color.fromARGB(255, 241, 241, 241),
       ),
       backgroundColor: const Color.fromARGB(255, 19, 19, 19),
@@ -59,90 +72,29 @@ class MyHome extends StatelessWidget {
       body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              TitleName('Generate a new question!', textColor: Color.fromARGB(255, 0, 255, 229),),// Calling from external file
               Center(
                 child: BigCard(pair: pair),
               ),
-              ElevatedButton(onPressed: () {
-                appState.getNext();
-              },
-                  child: Text(' Next Question'),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(onPressed: () {
+                  appState.getNext();
+                },
+                    child: ButtonRandom('NextQuestion',
+                    textColor: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                ),
               ),
             ],
           ),
-      drawer: Drawer( // Learning purposes
-        child: ListView(
-          padding: const EdgeInsets.all(0),
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 128, 116, 240),
-              ), //BoxDecoration
-              child: UserAccountsDrawerHeader(
-                decoration: BoxDecoration(color: Color.fromARGB(255, 128, 116, 240)),
-                accountName: Text(
-                  "Jovanni Feliz",
-                  style: TextStyle(fontSize: 18),
-                ),
-                accountEmail: Text("jojo@gmail.com"),
-                currentAccountPictureSize: Size.square(50),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 235, 176, 66),
-                  child: Text(
-                    "A",
-                    style: TextStyle(fontSize: 30.0, color: Color.fromARGB(255, 17, 17, 17),
-                    ),
-                  ), //Text
-                ), //circleAvatar
-              ), //UserAccountDrawerHeader
-            ), //DrawerHeader
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text(' My Profile '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.book),
-              title: const Text(' My Collection '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.workspace_premium),
-              title: const Text(' Go Premium '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.video_label),
-              title: const Text(' My Own Questions '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text(' Edit Profile '),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('LogOut'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ), //Drawer
+      //Drawer
     );
   }
 }
+
+
+// I am trying to pass a widget into my custom widget by calling it through the Constructor named parameters
 
 class BigCard extends StatelessWidget {
   const BigCard({
